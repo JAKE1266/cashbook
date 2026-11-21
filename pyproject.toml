@@ -8,6 +8,10 @@ version = "1.0.0"
 description = "CashBook 轻记账 —— 零依赖的命令行记账本:记账 / 月度报表 / 分类图表 / 预算预警 / CSV 导出"
 readme = "README.md"
 requires-python = ">=3.9"
+dependencies = [
+    # 自研终端排版微库(CJK 对齐),与项目集共同维护
+    "cjktable @ git+https://github.com/JAKE1266/cjktable.git",
+]
 license = { text = "MIT" }
 authors = [{ name = "JAKE1266" }]
 keywords = ["accounting", "ledger", "expense-tracker", "cli", "budget", "money"]
