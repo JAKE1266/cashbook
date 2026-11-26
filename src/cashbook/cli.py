@@ -207,7 +207,15 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _configure_standard_streams() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="replace")
+
+
 def main(argv=None) -> int:
+    _configure_standard_streams()
     parser = build_parser()
     args = parser.parse_args(argv)
     if not getattr(args, "func", None):

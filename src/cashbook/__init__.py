@@ -12,6 +12,6 @@ from cashbook.core.model import Record, parse_date, parse_month
 from cashbook.core.reports import month_report, summarize
 from cashbook.core.storage import Ledger
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 __all__ = ["Ledger", "Record", "month_report", "parse_date", "parse_month", "summarize", "__version__"]

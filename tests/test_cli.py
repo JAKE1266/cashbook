@@ -4,6 +4,9 @@ import contextlib
 import csv
 import io
 import json
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -86,6 +89,19 @@ class CliTest(unittest.TestCase):
         code, _, err = self.run_cli("--file", self.file, "add", "abc", "餐饮")
         self.assertEqual(code, 1)
         self.assertIn("金额不合法", err)
+
+    def test_utf8_output_under_legacy_windows_encoding(self):
+        env = os.environ.copy()
+        env["PYTHONIOENCODING"] = "cp1252"
+
+        result = subprocess.run(
+            [sys.executable, "-m", "cashbook", "--file", self.file, "add", "12.3", "餐饮", "午饭"],
+            capture_output=True,
+            env=env,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", errors="replace"))
+        self.assertIn("餐饮", result.stdout.decode("utf-8"))
 
     def test_no_args_shows_help(self):
         code, out, _ = self.run_cli()

@@ -1,11 +1,11 @@
 # CashBook 轻记账
 
 > 命令行里的记账本:记账、月度报表、分类图表、预算预警。
-> 核心逻辑只用 Python 标准库;唯一依赖是自研微库 [cjktable](https://github.com/JAKE1266/cjktable)(终端中文对齐排版)。数据 100% 存在你自己的电脑上。
+> 核心逻辑与终端排版均只使用 Python 标准库;[cjktable](https://github.com/JAKE1266/cjktable) 已内嵌,无需额外拉取 Git 依赖。数据 100% 存在你自己的电脑上。
 
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Dependencies](https://img.shields.io/badge/dependencies-cjktable%20%28self--built%29-blue)
+![Dependencies](https://img.shields.io/badge/dependencies-0-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
 
 ## ✨ 特性
@@ -13,10 +13,10 @@
 - 💰 **精确金额**:全程 `Decimal`,没有 0.1 + 0.2 ≠ 0.3 的浮点烦恼
 - 📊 **月度报表**:收支汇总 + 分类占比 **ASCII 条形图**,终端里一眼看穿钱花哪儿了
 - 🎯 **预算预警**:给「餐饮」设个月度上限,超支自动 `[!]` 提醒
-- 🖥 **中文友好**:表格按 CJK 双宽字符对齐(基于自研微库 [cjktable](https://github.com/JAKE1266/cjktable)),Windows / macOS / Linux 终端都不乱
+- 🖥 **中文友好**:表格按 CJK 双宽字符对齐(使用内嵌的 [cjktable](https://github.com/JAKE1266/cjktable)),Windows / macOS / Linux 终端都不乱
 - 📤 **一键导出**:CSV 采用 `utf-8-sig` 编码,Excel 双击打开不乱码
 - 🔒 **数据自主**:就是一个 JSON 文件,备份 = 复制文件;保存采用「临时文件 + 原子替换」,不怕中途断电
-- 🧪 **带测试**:20 个单元测试 + GitHub Actions 三系统 × 三版本 CI
+- 🧪 **带测试**:21 个单元测试 + 离线 wheel 安装冒烟 + GitHub Actions 三系统 × 三版本 CI
 - 🔌 **可脚本化**:每个命令都支持 `--json`
 
 ## 📦 安装
@@ -24,10 +24,8 @@
 ```bash
 git clone https://github.com/JAKE1266/cashbook.git
 cd cashbook
-python -m cashbook --help          # 克隆即用
-
-# 或安装为命令(获得 cashbook 命令)
-pip install .
+python -m pip install .              # 无运行时依赖
+cashbook --help                     # 克隆并安装即用
 ```
 
 ## 🚀 快速上手
@@ -100,9 +98,10 @@ cashbook/
 │   │   ├── model.py           # Record 数据模型 + 日期/金额解析
 │   │   ├── storage.py         # JSON 账本(原子写入、增删查、预算)
 │   │   ├── reports.py         # 月度报表、分类汇总、ASCII 条形图
-│   │   └── util.py            # CJK 对齐、金额格式化
+│   │   └── util.py            # 金额格式化与文本宽度工具
 │   └── cli.py                 # 命令行入口
-├── tests/                     # 20 个单元测试(unittest 免安装可跑)
+├── src/cjktable/              # 内嵌 CJK 排版微库
+├── tests/                     # 21 个单元测试 + wheel 安装冒烟
 └── pyproject.toml
 ```
 
@@ -111,6 +110,11 @@ cashbook/
 ```bash
 PYTHONPATH=src python -m unittest discover -s tests -v
 # Windows(PowerShell):$env:PYTHONPATH="src"; python -m unittest discover -s tests -v
+
+python -m pip install build twine
+python -m build
+python -m twine check dist/*
+python tests/smoke_installed.py
 ```
 
 ## 🗺 路线图

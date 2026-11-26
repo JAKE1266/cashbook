@@ -3,6 +3,16 @@
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 格式,
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [1.0.1] - 2026-11-26
+
+### 修复
+- 移除重复的 `cjktable` VCS 依赖,保留内嵌实现,发布包真正零运行时依赖
+- CLI 统一 UTF-8 输出,避免 Windows 传统编码下中文崩溃
+
+### 改进
+- CI 构建并离线安装 wheel,在干净虚拟环境验证 `cashbook` 命令与完整记账流程
+- 增加 wheel 内容、依赖元数据与 Python 3.9–3.13 三系统发布验证
+
 ## [1.0.0] - 2026-11-21
 
 ### 变更

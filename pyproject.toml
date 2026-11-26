@@ -1,25 +1,22 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "cashbook"
-version = "1.0.0"
+version = "1.0.1"
 description = "CashBook 轻记账 —— 零依赖的命令行记账本:记账 / 月度报表 / 分类图表 / 预算预警 / CSV 导出"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = [
-    # 自研终端排版微库(CJK 对齐),与项目集共同维护
-    "cjktable @ git+https://github.com/JAKE1266/cjktable.git",
-]
-license = { text = "MIT" }
+dependencies = []
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "JAKE1266" }]
 keywords = ["accounting", "ledger", "expense-tracker", "cli", "budget", "money"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
     "Natural Language :: Chinese (Simplified)",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
